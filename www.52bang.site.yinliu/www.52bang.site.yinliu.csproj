@@ -167,6 +167,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="config\BaseJson.txt" />
+    <Content Include="config\config.ini" />
+    <Content Include="config\MovieConfig.txt" />
     <Content Include="WinFrom_WebApi_Demo.csproj" />
   </ItemGroup>
   <ItemGroup>

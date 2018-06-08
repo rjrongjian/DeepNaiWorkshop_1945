@@ -1,0 +1,12 @@
+﻿{
+  "CheckedQQQun": {},
+  "IsNeed": true,
+  "SearchCommand": "搜",
+  "NoSearchedMovieInQun": "{@用户} 暂未找到资源",
+  "NoSearchedMovie": "暂时未找到此资源",
+  "HaveSearchedMovie": "我找到了以下资源（电影含多个链接对应不同清晰度，电视剧不同集）：《{电影名}》{电影链接}",
+  "HaveSearchedMovieInQun": "{@用户} 我找到了{电影名}，包含以下链接{电影链接}",
+  "IsCanPrivateMessage": true,
+  "ConvertLinkIndex": 0,
+  "SelectedParserIndex": 0
+}

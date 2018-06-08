@@ -1,0 +1,10 @@
+﻿{
+  "Keys": {
+    "测试-##-1-##-1": "ok",
+    "寂静之地-##-0-##-1": "http://suo.im/5d4k44"
+  },
+  "CheckedQQQun": {},
+  "NewerEnterQun": "你来了{@新用户}",
+  "IsAutoAddQun": true,
+  "IsAutoAddFriend": true
+}

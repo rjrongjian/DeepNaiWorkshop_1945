@@ -147,7 +147,7 @@ namespace www._52bang.site.tk.yinliu
                                 checkBox10.Checked = true;
                             }
 
-                            if ("1".Equals(keys[2]))
+                            if ("1".Equals(keys[8]))
                             {
                                 checkBox9.Checked = true;
                             }
