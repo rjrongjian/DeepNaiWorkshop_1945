@@ -167,8 +167,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\易游网络验证\project\CSharp\WinFrom_WebApi_Demo\WinFrom_WebApi_Demo.csproj">
-      <Project>{af267ce2-cca4-4c40-b8ac-70e2fde99dcb}</Project>
+    <Content Include="WinFrom_WebApi_Demo.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WinFrom_WebApi_Demo\WinFrom_WebApi_Demo.csproj">
+      <Project>{105a402d-c38d-4e30-a9db-c9596d26127d}</Project>
       <Name>WinFrom_WebApi_Demo</Name>
     </ProjectReference>
   </ItemGroup>

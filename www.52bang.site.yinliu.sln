@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "www.52bang.site.yinliu", "w
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "TestPlugin\TestPlugin.csproj", "{A7500E0E-7DC7-41D4-B7F5-82CB0D72EBFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFrom_WebApi_Demo", "..\..\..\易游网络验证\project\CSharp\WinFrom_WebApi_Demo\WinFrom_WebApi_Demo.csproj", "{AF267CE2-CCA4-4C40-B8AC-70E2FDE99DCB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFrom_WebApi_Demo", "WinFrom_WebApi_Demo\WinFrom_WebApi_Demo.csproj", "{105A402D-C38D-4E30-A9DB-C9596D26127D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{A7500E0E-7DC7-41D4-B7F5-82CB0D72EBFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7500E0E-7DC7-41D4-B7F5-82CB0D72EBFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7500E0E-7DC7-41D4-B7F5-82CB0D72EBFB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF267CE2-CCA4-4C40-B8AC-70E2FDE99DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF267CE2-CCA4-4C40-B8AC-70E2FDE99DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF267CE2-CCA4-4C40-B8AC-70E2FDE99DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF267CE2-CCA4-4C40-B8AC-70E2FDE99DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{105A402D-C38D-4E30-A9DB-C9596D26127D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{105A402D-C38D-4E30-A9DB-C9596D26127D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{105A402D-C38D-4E30-A9DB-C9596D26127D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{105A402D-C38D-4E30-A9DB-C9596D26127D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
