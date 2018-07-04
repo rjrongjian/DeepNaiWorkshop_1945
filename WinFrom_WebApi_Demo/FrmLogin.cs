@@ -35,6 +35,7 @@ namespace WinFrom_WebApi_Demo
                     //  这里改成自己的参数名称
                     parameters.Add("StatusCode", code);
                     parameters.Add("UserName", upName);
+                    Console.WriteLine("登录后，statusCode");
 
 
                     WebPost.ApiPost(logOutUrl, parameters);

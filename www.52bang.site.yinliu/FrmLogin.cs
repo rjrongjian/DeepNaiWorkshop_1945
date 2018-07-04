@@ -242,5 +242,10 @@ namespace www._52bang.site.tk.yinliu
                 MessageBox.Show("网络连接失败!");
             }
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show("联系客服购买充值码：周卡-6元，月卡-22元，季卡-58元");
+        }
     }
 }

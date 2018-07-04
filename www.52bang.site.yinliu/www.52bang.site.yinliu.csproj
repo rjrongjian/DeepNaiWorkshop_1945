@@ -100,6 +100,7 @@
     <Compile Include="MyModel\KunyunInfo.cs" />
     <Compile Include="MyModel\Member.cs" />
     <Compile Include="MyModel\MovieInfo.cs" />
+    <Compile Include="MyModel\MovieInfo2.cs" />
     <Compile Include="MyModel\MyResponse.cs" />
     <Compile Include="MyModel\PlatformInfo.cs" />
     <Compile Include="MyModel\ResourceApiInfo.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="MyTool\MySystemUtil.cs" />
     <Compile Include="MyTool\MyUrlTool.cs" />
     <Compile Include="MyTool\YiYouCode.cs" />
+    <Compile Include="MyTool\ZuidaSearch.cs" />
     <Compile Include="OperateIniFile.cs" />
     <Compile Include="PromptForm.cs">
       <SubType>Form</SubType>

@@ -47,6 +47,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label15 = new System.Windows.Forms.Label();
             this.txtReReferral = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.btnRecharge = new System.Windows.Forms.Button();
@@ -68,7 +69,7 @@
             this.txtRetrieveUserName = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -250,6 +251,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.linkLabel1);
             this.tabPage3.Controls.Add(this.label15);
             this.tabPage3.Controls.Add(this.txtReReferral);
             this.tabPage3.Controls.Add(this.label14);
@@ -264,6 +266,16 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "充值";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.ForeColor = System.Drawing.Color.Red;
+            this.label15.Location = new System.Drawing.Point(5, 130);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(152, 16);
+            this.label15.TabIndex = 13;
+            this.label15.Text = "客服qq：1633545776";
             // 
             // txtReReferral
             // 
@@ -283,7 +295,7 @@
             // 
             // btnRecharge
             // 
-            this.btnRecharge.Location = new System.Drawing.Point(184, 118);
+            this.btnRecharge.Location = new System.Drawing.Point(237, 118);
             this.btnRecharge.Name = "btnRecharge";
             this.btnRecharge.Size = new System.Drawing.Size(82, 28);
             this.btnRecharge.TabIndex = 10;
@@ -455,15 +467,16 @@
             this.label13.TabIndex = 12;
             this.label13.Text = "邮箱地址";
             // 
-            // label15
+            // linkLabel1
             // 
-            this.label15.AutoSize = true;
-            this.label15.ForeColor = System.Drawing.Color.Red;
-            this.label15.Location = new System.Drawing.Point(9, 130);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(152, 16);
-            this.label15.TabIndex = 13;
-            this.label15.Text = "客服qq：1633545776";
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(162, 130);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(72, 16);
+            this.linkLabel1.TabIndex = 14;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "价格说明";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // FrmLogin
             // 
@@ -540,6 +553,7 @@
         private System.Windows.Forms.TextBox txtReReferral;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

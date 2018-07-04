@@ -24,10 +24,13 @@ namespace WinFrom_WebApi_Demo
             checkStatus.Start();
             upDateTime = DateTime.Now;
             InitializeComponent();
+
+            textBox5.Text = code + "___" + userName;
         }
 
         private void checkStatus_Tick(object sender, EventArgs e)
         {
+
             //CheckUserStatus | 检测用户状态
             var url = "http://w.eydata.net/a246b5c4c26efc10";  //  这里改成自己的地址
             IDictionary<string, string> parameters = new Dictionary<string, string>();

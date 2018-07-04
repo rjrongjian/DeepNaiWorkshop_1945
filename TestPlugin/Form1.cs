@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using www._52bang.site.tk.yinliu.MyTool;
+using www._52bang.site.yinliu.MyModel;
+using www_52bang_site_enjoy.MyModel;
 using www_52bang_site_enjoy.MyTool;
 
 namespace TestPlugin
@@ -97,6 +99,41 @@ namespace TestPlugin
         private void button2_Click(object sender, EventArgs e)
         {
              KuYunSearch.Search("寂静之地");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            List<KunyunInfo> list = KuYunSearch.Search(textBox1.Text);
+            Console.WriteLine("search接口");
+            foreach(KunyunInfo kunyunInfo in list)
+            {
+                Console.WriteLine("电影名：" + kunyunInfo.name);
+                if (kunyunInfo.url != null)
+                {
+                    foreach (MovieInfo2 urlOne in kunyunInfo.url)
+                    {
+                        Console.WriteLine("链接名：" + urlOne.MovieName+"\r\n"+"，链接："+urlOne.Url);
+                    }
+                }
+                
+            }
+            Console.WriteLine("search接口结束.........");
+            List<KunyunInfo> list2 = KuYunSearch.Search2(textBox1.Text);
+            Console.WriteLine("search接口");
+            foreach (KunyunInfo kunyunInfo in list2)
+            {
+                Console.WriteLine("电影名："+kunyunInfo.name  );
+                if (kunyunInfo.url != null)
+                {
+                    foreach (MovieInfo2 urlOne in kunyunInfo.url)
+                    {
+                        Console.WriteLine("链接名：" + urlOne.MovieName + "\r\n" + "，链接：" + urlOne.Url);
+                    }
+                }
+                
+            }
+            Console.WriteLine("search2接口结束.........");
+
         }
     }
 }

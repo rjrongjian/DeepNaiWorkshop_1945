@@ -8,6 +8,7 @@ using WinFrom_WebApi_Demo;
 using www._52bang.site.tk.yinliu;
 using www._52bang.site.tk.yinliu.MyModel;
 using www._52bang.site.tk.yinliu.MyTool;
+using www._52bang.site.yinliu.MyModel;
 using www_52bang_site_enjoy.MyModel;
 using www_52bang_site_enjoy.MyTool;
 
@@ -104,15 +105,15 @@ namespace www._52bang.site.yinliu
                                     {
 
                                         replayContent = replayContent.Replace("{电影名}", k.name);
-                                        foreach (string res in k.url)
+                                        foreach (MovieInfo2 res in k.url)
                                         {
                                             if (k.resourceTYpe == 1)//m3u8
                                             {
-                                                sb.Append(MyLinkCoverter.CovertUrlInSuoIm(res, true) + Environment.NewLine);
+                                                sb.Append(res.MovieName+"  "+MyLinkCoverter.CovertUrlInSuoIm(res.Url, true) + Environment.NewLine);
                                             }
                                             else//直接观看链接
                                             {
-                                                sb.Append(MyLinkCoverter.CovertUrlInSuoIm(res, false) + Environment.NewLine);
+                                                sb.Append(res.MovieName + "  "+MyLinkCoverter.CovertUrlInSuoIm(res.Url, false) + Environment.NewLine);
                                             }
 
                                         }
@@ -137,6 +138,7 @@ namespace www._52bang.site.yinliu
                         }
                         catch (Exception e2)
                         {
+                            MyLogUtil.ErrToLog("搜索出现问题，原因："+e2);
                             CoolQApi.SendPrivateMsg(fromQQ, "小喵出现问题，请过会再来尝试");
                             return base.ProcessPrivateMessage(subType, sendTime, fromQQ, msg, font);
                         }
@@ -411,7 +413,8 @@ namespace www._52bang.site.yinliu
                                 if (list == null || list.Count == 0)
                                 {
                                     //CoolQApi.SendPrivateMsg(fromQQ, "暂时未找到此资源");
-                                    string temp = CacheData.MovieConfig.HaveSearchedMovieInQun;
+                                    string temp = CacheData.MovieConfig.NoSearchedMovieInQun;
+                                    temp = temp.Replace("{@用户}", CoolQCode.At(fromQq));
                                     CoolQApi.SendGroupMsg(fromGroup, temp);
                                         
 
@@ -426,15 +429,15 @@ namespace www._52bang.site.yinliu
                                     {
 
                                         replayContent = replayContent.Replace("{电影名}", k.name);
-                                        foreach (string res in k.url)
+                                        foreach (MovieInfo2 res in k.url)
                                         {
                                             if (k.resourceTYpe == 1)//m3u8
                                             {
-                                                sb.Append(MyLinkCoverter.CovertUrlInSuoIm(res, true) + Environment.NewLine);
+                                                sb.Append(res.MovieName + "  " +MyLinkCoverter.CovertUrlInSuoIm(res.Url, true) + Environment.NewLine);
                                             }
                                             else//直接观看链接
                                             {
-                                                sb.Append(MyLinkCoverter.CovertUrlInSuoIm(res, false) + Environment.NewLine);
+                                                sb.Append(res.MovieName + "  " +MyLinkCoverter.CovertUrlInSuoIm(res.Url, false) + Environment.NewLine);
                                             }
 
                                         }

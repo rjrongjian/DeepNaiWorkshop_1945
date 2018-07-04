@@ -7,12 +7,15 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using www._52bang.site.tk.yinliu.MyModel;
+using www._52bang.site.yinliu.MyModel;
 using www_52bang_site_enjoy.MyModel;
 
 namespace www_52bang_site_enjoy.MyTool
 {
     public class KuYunSearch
     {
+        
         /// <summary>
         /// 优先m3u8资源需要播放器
         /// </summary>
@@ -20,14 +23,21 @@ namespace www_52bang_site_enjoy.MyTool
         /// <returns></returns>
         public static List<KunyunInfo> Search(string key)
         {
+            
             string detailPre = "http://kuyunzy.cc";
             if (string.IsNullOrWhiteSpace(key))
             {
                 return new List<KunyunInfo>();
             }
+            //如果用户搜索的结尾带结尾符，要去掉
+            String keyTemp = key;
+            if (keyTemp.EndsWith(CacheData.TheSameWithSearchKeySplit))
+            {
+                keyTemp = keyTemp.Substring(0, keyTemp.Length - CacheData.TheSameWithSearchKeySplit.Length);
+            }
             List<KunyunInfo> list = new List<KunyunInfo>();
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic.Add("searchword", key);
+            dic.Add("searchword", keyTemp);
             string content = HttpPost("http://kuyunzy.cc/search.asp", dic);
             //Console.WriteLine("响应的内容" + content);
             MatchCollection mList;
@@ -36,9 +46,75 @@ namespace www_52bang_site_enjoy.MyTool
             mList = Regex.Matches(content, regex);
             if (mList.Count>1)//说明匹配到多个资源，先让用户选择具体的资源，防止搜出来的是多个电视剧资源，炸屏
             {
+                if (key.EndsWith(CacheData.TheSameWithSearchKeySplit))//说明用户要搜索电影名与关键字名相同的电影
+                {
+                    foreach(Match m in mList)
+                    {
+                        if ((m.Groups[2].ToString() + CacheData.TheSameWithSearchKeySplit).Equals(key)){
+                            string url = detailPre + m.Groups[1].ToString().Trim();
+                            string name = m.Groups[2].ToString();
+                            //获取链接
+                            string strRes = HttpGet(url, "");
+                            //<h1>来源:kkm3u8</h1> //存在就不再获取
+                            MatchCollection match = Regex.Matches(strRes, "<h1>来源:kkm3u8</h1>[\\s\\S]+?checked />全选");
+                            if (match.Count > 0)
+                            {
+                                //Console.WriteLine("匹配后：" + match[0].ToString());
+                                string kkm3u8 = match[0].ToString();
+                                //解析串
+                                mList = Regex.Matches(kkm3u8, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/> <a>(.+?)\\$");
+                                List<MovieInfo2> urlList = new List<MovieInfo2>();
+
+                                foreach (Match m3u8Math in mList)
+                                {
+
+                                    urlList.Add(new MovieInfo2(m3u8Math.Groups[2].ToString(), m3u8Math.Groups[1].ToString()));
+                                }
+                                list.Add(new KunyunInfo(name, urlList, 1));
+
+                            }
+                            else
+                            {
+                                //<h1>来源:kkyun</h1>,[\\s\\S]+? 包含换行符的匹配
+                                match = Regex.Matches(strRes, "<h1>来源:kkyun</h1>[\\s\\S]+?checked />全选");
+                                if (match.Count > 0)
+                                {
+                                    string kkyun = match[0].ToString();
+                                    //解析串，取第一个就行链接
+                                    mList = Regex.Matches(kkyun, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/> <a>(.+?)\\$");
+                                    List<MovieInfo2> urlList = new List<MovieInfo2>();
+
+                                    foreach (Match m3u8Math in mList)
+                                    {
+                                        
+                                        urlList.Add(new MovieInfo2(m3u8Math.Groups[2].ToString(), m3u8Math.Groups[1].ToString()));
+                                    }
+                                    list.Add(new KunyunInfo(name, urlList, 2));
+                                }
+                                else
+                                {
+                                    //如果该资源没有链接，则忽略
+                                    continue;
+                                }
+                            }
+
+                            return list;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                }
+
+
                 foreach (Match m in mList)
                 {
                     string name = m.Groups[2].ToString();
+                    if (name.Equals(key))//搜索的电影名和资源重名，需要给资源加个
+                    {
+                        name = name + CacheData.TheSameWithSearchKeySplit;
+                    }
                     list.Add(new KunyunInfo(name, null, 2));
                 }
             }
@@ -53,16 +129,15 @@ namespace www_52bang_site_enjoy.MyTool
                     MatchCollection match = Regex.Matches(strRes, "<h1>来源:kkm3u8</h1>[\\s\\S]+?checked />全选");
                     if (match.Count > 0)
                     {
-                        Console.WriteLine("匹配后：" + match[0].ToString());
+                        //Console.WriteLine("匹配后：" + match[0].ToString());
                         string kkm3u8 = match[0].ToString();
                         //解析串，取第一个就行链接
-                        mList = Regex.Matches(kkm3u8, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/>");
-                        List<string> urlList = new List<string>();
+                        mList = Regex.Matches(kkm3u8, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/> <a>(.+?)\\$");
+                        List<MovieInfo2> urlList = new List<MovieInfo2>();
                        
                         foreach (Match m3u8Math in mList)
                         {
-                            urlList.Add(m3u8Math.Groups[1].ToString());
-                           
+                            urlList.Add(new MovieInfo2(m3u8Math.Groups[2].ToString(), m3u8Math.Groups[1].ToString()));
                         }
                         list.Add(new KunyunInfo(name, urlList, 1));
 
@@ -75,13 +150,13 @@ namespace www_52bang_site_enjoy.MyTool
                         {
                             string kkyun = match[0].ToString();
                             //解析串，取第一个就行链接
-                            mList = Regex.Matches(kkyun, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/>");
-                            List<string> urlList = new List<string>();
+                            mList = Regex.Matches(kkyun, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/> <a>(.+?)\\$");
+                            List<MovieInfo2> urlList = new List<MovieInfo2>();
 
                             foreach (Match m3u8Math in mList)
                             {
-                                urlList.Add(m3u8Math.Groups[1].ToString());
-
+                                
+                                urlList.Add(new MovieInfo2(m3u8Math.Groups[2].ToString(), m3u8Math.Groups[1].ToString()));
                             }
                             list.Add(new KunyunInfo(name, urlList, 2));
                         }
@@ -111,9 +186,15 @@ namespace www_52bang_site_enjoy.MyTool
             {
                 return new List<KunyunInfo>();
             }
+            //如果用户搜索的结尾带结尾符，要去掉
+            String keyTemp = key;
+            if (keyTemp.EndsWith(CacheData.TheSameWithSearchKeySplit))
+            {
+                keyTemp = keyTemp.Substring(0, keyTemp.Length - CacheData.TheSameWithSearchKeySplit.Length);
+            }
             List<KunyunInfo> list = new List<KunyunInfo>();
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic.Add("searchword", key);
+            dic.Add("searchword", keyTemp);
             string content = HttpPost("http://kuyunzy.cc/search.asp", dic);
             //Console.WriteLine("响应的内容" + content);
             MatchCollection mList;
@@ -122,9 +203,77 @@ namespace www_52bang_site_enjoy.MyTool
             mList = Regex.Matches(content, regex);
             if (mList.Count > 1)//说明匹配到多个资源，先让用户选择具体的资源，防止搜出来的是多个电视剧资源，炸屏
             {
+
+                if (key.EndsWith(CacheData.TheSameWithSearchKeySplit))//说明用户要搜索电影名与关键字名相同的电影
+                {
+                    foreach (Match m in mList)
+                    {
+                        if ((m.Groups[2].ToString() + CacheData.TheSameWithSearchKeySplit).Equals(key))
+                        {
+                            string url = detailPre + m.Groups[1].ToString().Trim();
+                            string name = m.Groups[2].ToString();
+                            //获取链接
+                            string strRes = HttpGet(url, "");
+                            //<h1>来源:kkyun</h1>,[\\s\\S]+? 包含换行符的匹配
+                            MatchCollection match = Regex.Matches(strRes, "<h1>来源:kkyun</h1>[\\s\\S]+?checked />全选");
+                            if (match.Count > 0)
+                            {
+                                //Console.WriteLine("匹配后：" + match[0].ToString());
+                                string kkm3u8 = match[0].ToString();
+                                //解析串，取第一个就行链接
+                                mList = Regex.Matches(kkm3u8, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/> <a>(.+?)\\$");
+                                List<MovieInfo2> urlList = new List<MovieInfo2>();
+
+                                foreach (Match m3u8Math in mList)
+                                {
+                                    //urlList.Add(m3u8Math.Groups[1].ToString());
+                                    urlList.Add(new MovieInfo2(m3u8Math.Groups[2].ToString(), m3u8Math.Groups[1].ToString()));
+
+                                }
+                                list.Add(new KunyunInfo(name, urlList, 2));
+
+                            }
+                            else
+                            {
+                                //<h1>来源:kkm3u8</h1> //存在就不再获取
+                                match = Regex.Matches(strRes, "<h1>来源:kkm3u8</h1>[\\s\\S]+?checked />全选");
+                                if (match.Count > 0)
+                                {
+                                    string kkyun = match[0].ToString();
+                                    //解析串，取第一个就行链接
+                                    mList = Regex.Matches(kkyun, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/> <a>(.+?)\\$");
+                                    List<MovieInfo2> urlList = new List<MovieInfo2>();
+
+                                    foreach (Match m3u8Math in mList)
+                                    {
+                                        //urlList.Add(m3u8Math.Groups[1].ToString());
+                                        urlList.Add(new MovieInfo2(m3u8Math.Groups[2].ToString(), m3u8Math.Groups[1].ToString()));
+
+                                    }
+                                    list.Add(new KunyunInfo(name, urlList, 1));
+                                }
+                                else
+                                {
+                                    //如果该资源没有链接，则忽略
+                                    continue;
+                                }
+                            }
+                            return list;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                }
+
                 foreach (Match m in mList)
                 {
                     string name = m.Groups[2].ToString();
+                    if (name.Equals(key))//搜索的电影名和资源重名，需要给资源加个
+                    {
+                        name = name + CacheData.TheSameWithSearchKeySplit;
+                    }
                     list.Add(new KunyunInfo(name, null, 2));
                 }
             }
@@ -140,16 +289,17 @@ namespace www_52bang_site_enjoy.MyTool
                     MatchCollection match = Regex.Matches(strRes, "<h1>来源:kkyun</h1>[\\s\\S]+?checked />全选");
                     if (match.Count > 0)
                     {
-                        Console.WriteLine("匹配后：" + match[0].ToString());
+                        //Console.WriteLine("匹配后：" + match[0].ToString());
                         string kkm3u8 = match[0].ToString();
+                        //Console.WriteLine("匹配到的字符串："+ kkm3u8);
                         //解析串，取第一个就行链接
-                        mList = Regex.Matches(kkm3u8, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/>"); 
-                        List<string> urlList = new List<string>();
+                        mList = Regex.Matches(kkm3u8, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/> <a>(.+?)\\$"); 
+                        List<MovieInfo2> urlList = new List<MovieInfo2>();
 
                         foreach (Match m3u8Math in mList)
                         {
-                            urlList.Add(m3u8Math.Groups[1].ToString());
-
+                            //urlList.Add(m3u8Math.Groups[1].ToString());
+                            urlList.Add(new MovieInfo2(m3u8Math.Groups[2].ToString(), m3u8Math.Groups[1].ToString()));
                         }
                         list.Add(new KunyunInfo(name, urlList, 2));
 
@@ -162,13 +312,13 @@ namespace www_52bang_site_enjoy.MyTool
                         {
                             string kkyun = match[0].ToString();
                             //解析串，取第一个就行链接
-                            mList = Regex.Matches(kkyun, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/>");
-                            List<string> urlList = new List<string>();
+                            mList = Regex.Matches(kkyun, "<input type='checkbox' name='copy_yah' id='copy_yah' value='(.+?)'  checked/> <a>(.+?)\\$");
+                            List<MovieInfo2> urlList = new List<MovieInfo2>();
 
                             foreach (Match m3u8Math in mList)
                             {
-                                urlList.Add(m3u8Math.Groups[1].ToString());
-
+                                //urlList.Add(m3u8Math.Groups[1].ToString());
+                                urlList.Add(new MovieInfo2(m3u8Math.Groups[2].ToString(), m3u8Math.Groups[1].ToString()));
                             }
                             list.Add(new KunyunInfo(name, urlList, 1));
                         }

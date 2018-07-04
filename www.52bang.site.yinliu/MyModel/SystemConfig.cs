@@ -34,7 +34,6 @@ namespace www_52bang_site_enjoy.MyModel
             keywords.Add("黑豹", "电影链接 "+MyLinkCoverter.CovertUrlInSuoIm("http://vs1.baduziyuan.com/20180503/Sej99PQG/index.m3u8", true)+ " \r\n更多资源聊天回复\"会员\"");
             keywords.Add("寂静之地", "电影链接 "+MyLinkCoverter.CovertUrlInSuoIm("http://vip888.kuyun99.com/20180522/bAtxZrCv/index.m3u8", true)+" \r\n更多资源聊天回复\"会员\"");
             keywords.Add("索罗", "电影链接 " + MyLinkCoverter.CovertUrlInSuoIm("http://vip888.kuyun99.com/20180527/i2sKAHO3/index.m3u8", true)+ " \r\n更多资源聊天回复\"会员\"");
-
             //CanParsePlatform.Add("youku");
         }
     }
