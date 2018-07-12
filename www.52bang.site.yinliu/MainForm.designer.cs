@@ -142,6 +142,11 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
+            this.skinTabPage3 = new CCWin.SkinControl.SkinTabPage();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label37 = new System.Windows.Forms.Label();
             this.skinTabControl1.SuspendLayout();
             this.skinTabPage1.SuspendLayout();
             this.groupBox12.SuspendLayout();
@@ -159,6 +164,7 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.skinDataGridView1)).BeginInit();
+            this.skinTabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // skinTabControl1
@@ -167,6 +173,7 @@
             this.skinTabControl1.CloseRect = new System.Drawing.Rectangle(2, 2, 12, 12);
             this.skinTabControl1.Controls.Add(this.skinTabPage1);
             this.skinTabControl1.Controls.Add(this.skinTabPage2);
+            this.skinTabControl1.Controls.Add(this.skinTabPage3);
             this.skinTabControl1.HeadBack = null;
             this.skinTabControl1.ImgTxtOffset = new System.Drawing.Point(0, 0);
             this.skinTabControl1.ItemSize = new System.Drawing.Size(70, 36);
@@ -181,7 +188,7 @@
             this.skinTabControl1.PageHover = ((System.Drawing.Image)(resources.GetObject("skinTabControl1.PageHover")));
             this.skinTabControl1.PageImagePosition = CCWin.SkinControl.SkinTabControl.ePageImagePosition.Left;
             this.skinTabControl1.PageNorml = null;
-            this.skinTabControl1.SelectedIndex = 1;
+            this.skinTabControl1.SelectedIndex = 2;
             this.skinTabControl1.Size = new System.Drawing.Size(681, 542);
             this.skinTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.skinTabControl1.TabIndex = 0;
@@ -1595,6 +1602,55 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "需要开启影音机器人的群（勾选即开启）：";
             // 
+            // skinTabPage3
+            // 
+            this.skinTabPage3.BackColor = System.Drawing.Color.White;
+            this.skinTabPage3.Controls.Add(this.label37);
+            this.skinTabPage3.Controls.Add(this.button1);
+            this.skinTabPage3.Controls.Add(this.textBox13);
+            this.skinTabPage3.Controls.Add(this.textBox12);
+            this.skinTabPage3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.skinTabPage3.Location = new System.Drawing.Point(0, 36);
+            this.skinTabPage3.Name = "skinTabPage3";
+            this.skinTabPage3.Size = new System.Drawing.Size(681, 506);
+            this.skinTabPage3.TabIndex = 2;
+            this.skinTabPage3.TabItemImage = null;
+            this.skinTabPage3.Text = "测试专用";
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(19, 108);
+            this.textBox12.Multiline = true;
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(572, 257);
+            this.textBox12.TabIndex = 0;
+            // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(87, 38);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(100, 21);
+            this.textBox13.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(202, 38);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(88, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "获取群员列表";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(40, 42);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(41, 12);
+            this.label37.TabIndex = 3;
+            this.label37.Text = "群号：";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1640,6 +1696,8 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.skinDataGridView1)).EndInit();
+            this.skinTabPage3.ResumeLayout(false);
+            this.skinTabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1750,5 +1808,10 @@
         private CCWin.SkinControl.SkinComboBox skinComboBox1;
         private CCWin.SkinControl.SkinComboBox skinComboBox2;
         private System.Windows.Forms.Label label36;
+        private CCWin.SkinControl.SkinTabPage skinTabPage3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.Label label37;
     }
 }

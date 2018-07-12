@@ -3,11 +3,13 @@ using HttpCodeLib;
 using Newbe.CQP.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using www_52bang_site_enjoy.MyModel;
 
 namespace www_52bang_site_enjoy.MyTool
@@ -109,6 +111,75 @@ namespace www_52bang_site_enjoy.MyTool
             return list;
         }
 
+        public static List<CQGroupMemberInfo> GetGroupMemberList(long groupNumber, ICoolQApi api)
+        {
+            List<CQGroupMemberInfo> list = new List<CQGroupMemberInfo>();
+            
+            try
+            {
+                String gc = groupNumber.ToString();
+                String bkn = api.GetCsrfToken().ToString();
+                string url = "http://qun.qq.com/cgi-bin/qun_mgr/search_group_members";
+                String cookie = api.GetCookies();
+                var postData = new Dictionary<string, string>();
+                postData.Add("gc", gc);
+                postData.Add("st", "0");
+                postData.Add("end", "20");
+                postData.Add("sort", "0");
+                postData.Add("bkn", bkn);
+                
+                HttpResults httpResults = new HttpResults();
+                HttpHelpers httpHelpers = new HttpHelpers();
+                httpResults = httpHelpers.GetHtml(new HttpItems
+                {
+                    URL = url,
+                    UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0",
+                    Cookie = cookie,
+                    Allowautoredirect = true,
+                    Referer= "http://qun.qq.com/member.html",
+                    Method = "post",
+                    Postdata = ("gc="+ gc+ "&st=0&end=20&sort=0&bkn="+ bkn),
+                    ContentType = "application/x-www-form-urlencoded"
+                });
+                //string sourceString = HttpPost(url, postData, "http://qun.qq.com/member.html", api.GetCookies());
+                String sourceString = httpResults.Html;
+                MyLogUtil.ToLog("获取的结果："+sourceString);
+                MyLogUtil.ToLog("获取的gc："+ gc);
+                MyLogUtil.ToLog("获取的bkn:" + bkn);
+                MyLogUtil.ToLog("获取的cookie:" + cookie);
+
+                var memberPattern = @"\{""card"":""(.*?)"",.*?,""uin"":\d+\}";
+                Regex regex = new Regex(memberPattern);
+                MatchCollection matches = regex.Matches(sourceString);
+
+                string qqPattern = @"(?<=""uin"":)\d+";
+                string namePattern = "(?<=\"nick\":\").*?(?=\",)";
+                string rolePatern = @"(?<=""role"":)\d+";
+                foreach (Match match in matches)
+                {
+                    CQGroupMemberInfo item = new CQGroupMemberInfo
+                    {
+                        GroupNumber = groupNumber,
+                        QQNumber = Convert.ToInt64(Regex.Match(match.Value, qqPattern).Value),
+                        QQName = Regex.Match(match.Value, namePattern).Value
+                    };
+                    string role = Regex.Match(match.Value, rolePatern).Value;
+                    item.Authority = (role.Equals("0")) ? "群主" : ((role.Equals("1")) ? "管理" : "成员");
+                    list.Add(item);
+                }
+                //log.DebugFormat("{0} GetGroupMemberList -> {1}", groupNumber, JsonConvert.SerializeObject(list));
+            }
+            catch (Exception ex)
+            {
+                //log.ErrorFormat("获得群成员{0}出错：{1}", groupNumber, ex.Message);
+                MyLogUtil.ToLog("抛了异常:" +ex);
+                MessageBox.Show("抛了异常");
+            }
+            
+            return list;
+        }
+
+
         public class GroupInfo2
         {
             /// <summary>
@@ -123,6 +194,14 @@ namespace www_52bang_site_enjoy.MyTool
             /// Owner
             /// </summary>
             public long owner { get; set; }
+        }
+
+        public class CQGroupMemberInfo
+        {
+            public String Authority { get; set; }
+            public long GroupNumber { get; set; }
+            public long QQNumber { get; set; }
+            public String QQName { get; set; }
         }
     }
 }

@@ -591,5 +591,11 @@ namespace www._52bang.site.tk.yinliu
             }
             Application.Exit();
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            String qqQunNum = textBox13.Text;
+            CoolQApiExtend.GetGroupMemberList(Convert.ToInt64(qqQunNum), coolQApi);
+        }
     }
 }
