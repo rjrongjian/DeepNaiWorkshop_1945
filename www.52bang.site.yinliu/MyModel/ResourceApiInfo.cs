@@ -8,6 +8,7 @@ namespace www._52bang.site.yinliu.MyModel
 {
     public class ResourceApiInfo: ComboxInfo
     {
-        public String apiUrl { set; get; }
+        public String apiUrlForHttpResource { set; get; }
+        public String apiUrlForHttpsResource { set; get; }
     }
 }

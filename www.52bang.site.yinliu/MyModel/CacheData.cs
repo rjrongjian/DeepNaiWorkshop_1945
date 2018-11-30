@@ -31,9 +31,25 @@ namespace www._52bang.site.tk.yinliu.MyModel
 
 
             resourceApiList = new List<ResourceApiInfo>();
-            resourceApiList.Add(new ResourceApiInfo { index = 0, moduleName = "酷云解析器", apiUrl = "http://www.bihaijx.com/kkm3u8.php?url=" });//解析器1 无广告，群里不能看
-            resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "618解析接口", apiUrl= "http://jx.618g.com/?url=" });//解析器1 有广告
-            resourceApiList.Add(new ResourceApiInfo { index = 2, moduleName = "解析器2", apiUrl = "http://www.52bang.site/dyxf/parse.html?url=" });//解析器2
+            //resourceApiList.Add(new ResourceApiInfo { index = 0, moduleName = "最大解析", apiUrlForHttpsResource = "http://zuidajiexi.net/m3u8.html?url=", apiUrlForHttpResource = "http://zuidajiexi.net/m3u8.html?url=" });//解析器1 无广告，群里不能看
+            //resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "急速解析", apiUrlForHttpsResource = "https://api.rzhyi.com/index.php?url=", apiUrlForHttpResource = "http://jx.rzhyi.com/index.php?url=" });//解析器1 有广告
+            //resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "酷云解析", apiUrlForHttpsResource = "https://www.bihaijx.com/kkm3u8.php?url=", apiUrlForHttpResource = "http://www.bihaijx.com/kkm3u8.php?url=" });//解析器1 有广告
+            //resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "000o", apiUrlForHttpsResource = "http://000o.cc/jx/ty.php?url=", apiUrlForHttpResource = "http://000o.cc/jx/ty.php?url=" });//解析器1 有广告
+            //resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "佛系解析", apiUrlForHttpsResource = "http://api.vsvc.cc/index.php?url=", apiUrlForHttpResource = "http://api.vsvc.cc/index.php?url=" });//解析器1 有广告
+            //resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "517解析", apiUrlForHttpsResource = "http://cn.bjbanshan.cn/jiexi.php?url=", apiUrlForHttpResource = "http://cn.bjbanshan.cn/jiexi.php?url=" });//解析器1 有广告
+            //resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "冰柠解析", apiUrlForHttpsResource = "https://www.jisyi.com/?url=", apiUrlForHttpResource = "https://www.jisyi.com/?url=" });//解析器1 有广告
+            //resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "馍片解析", apiUrlForHttpsResource = "http://jx.mopian.cc/?url=", apiUrlForHttpResource = "http://jx.mopian.cc/?url=" });//解析器1 有广告
+            //resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "优优解析", apiUrlForHttpsResource = "http://api.uuyingshi.com/?url=", apiUrlForHttpResource = "http://api.uuyingshi.com/?url=" });//解析器1 有广告
+            //resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "贼牛解析", apiUrlForHttpsResource = "http://api.zeiniu.top/?url=", apiUrlForHttpResource = "http://api.zeiniu.top/?url=" });//解析器1 有广告
+            //resourceApiList.Add(new ResourceApiInfo { index = 1, moduleName = "百玉阁解析", apiUrlForHttpsResource = "http://api.baiyug.top/?url=", apiUrlForHttpResource = "http://api.baiyug.top/?url=" });//解析器1 有广告
+
+            //备用解析接口
+            // 
+            //  
+            // 
+            // 
+            //冰柠云解析 
+
 
         }
     }

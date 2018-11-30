@@ -24,9 +24,10 @@ namespace www_52bang_site_enjoy.MyTool
         {
             //解析酷q消息体中的url链接
             MovieInfo movie = parseMsg(cqMsg);
-            movie.OriginalUrl = CacheData.resourceApiList[CacheData.MovieConfig.SelectedParserIndex].apiUrl + movie.Url;
+            
+            movie.OriginalUrl = KuYunSearch.selectJxApi(CacheData.resourceApiList[CacheData.MovieConfig.SelectedParserIndex], movie.Url);
             //组成可观看的视频地址
-            movie.Url = MyUrlTool.UrlEncode(CacheData.resourceApiList[CacheData.MovieConfig.SelectedParserIndex].apiUrl + movie.Url);
+            movie.Url = MyUrlTool.UrlEncode(KuYunSearch.selectJxApi(CacheData.resourceApiList[CacheData.MovieConfig.SelectedParserIndex], movie.Url));
             
             
             return movie;
@@ -111,7 +112,11 @@ namespace www_52bang_site_enjoy.MyTool
 
             MovieInfo movieInfo = Covert(cqMsg);
             //转成短网址，例用suo.im
-            movieInfo.Url = MyUrlTool.HttpGet("http://suo.im/api.php?url=" + movieInfo.Url, "");
+            String parseResult = MyUrlTool.HttpGet("http://suo.im/api.php?url=" + movieInfo.Url, "");
+            if (!parseResult.Contains("色情")){
+                movieInfo.Url = MyUrlTool.HttpGet("http://suo.im/api.php?url=" + movieInfo.Url, "");
+            }
+           
             
 
             MyResponse<MovieInfo> myResponse = new MyResponse<MovieInfo>(0, movieInfo);
@@ -126,7 +131,15 @@ namespace www_52bang_site_enjoy.MyTool
         {
             //转成短网址，例用suo.im
             string result = MyUrlTool.HttpGet("http://suo.im/api.php?url=" + url, "");
-            return result;
+            if (result.Contains("色情"))
+            {
+                return url;
+            }
+            else
+            {
+                return result;
+            }
+            
         }
 
         public static MyResponse<string> ParsePlatform(string msg)
@@ -167,7 +180,9 @@ namespace www_52bang_site_enjoy.MyTool
             string urlTemp = "";
             if (v)
             {
-                urlTemp = CacheData.resourceApiList[CacheData.MovieConfig.SelectedParserIndex].apiUrl + MyUrlTool.UrlEncode( url);
+                
+                urlTemp = KuYunSearch.selectJxApi(CacheData.resourceApiList[CacheData.MovieConfig.SelectedParserIndex], MyUrlTool.UrlEncode(url));
+                MyLogUtil.ToLog("转换之前的链接："+ urlTemp);
                 //MyLogUtil.ToLog("看看地址：" + urlTemp);
                 return CovertUrlInSuoIm(urlTemp);
             }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using www._52bang.site.tk.yinliu.MyModel.index;
 using www._52bang.site.tk.yinliu.MyModel.rot;
+using www._52bang.site.yinliu.MyModel;
 using www_52bang_site_enjoy.MyModel;
 
 namespace www_52bang_site_enjoy.MyTool
@@ -142,7 +143,22 @@ namespace www_52bang_site_enjoy.MyTool
             }
             else
             {
-                return null;
+                return new BaseJson();
+            }
+        }
+
+        public static List<ResourceApiInfo> GetVipParserApiList()
+        {
+            string dirPath = GetDllRoot() + "VipParser.txt";
+            if (File.Exists(dirPath))
+            {
+                MyJsonUtil<List<ResourceApiInfo>> myJsonUtil = new MyJsonUtil<List<ResourceApiInfo>>();
+                List < ResourceApiInfo > list = myJsonUtil.parseJsonStr(MyFileUtil.readFileAll(dirPath));
+                return list;
+            }
+            else
+            {
+                return new List<ResourceApiInfo>();
             }
         }
 

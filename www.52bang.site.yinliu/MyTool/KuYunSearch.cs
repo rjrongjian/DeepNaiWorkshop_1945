@@ -409,5 +409,18 @@ namespace www_52bang_site_enjoy.MyTool
             return retString;
         }
 
+        public static string selectJxApi(ResourceApiInfo resourceApi,String m3u8Src)
+        {
+            if (m3u8Src.StartsWith("https://"))
+            {
+                return resourceApi.apiUrlForHttpsResource + m3u8Src;
+            }
+            else
+            {
+                return resourceApi.apiUrlForHttpResource + m3u8Src;
+            }
+           
+        }
+
     }
 }

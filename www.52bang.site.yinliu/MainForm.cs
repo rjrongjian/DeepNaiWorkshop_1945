@@ -228,8 +228,12 @@ namespace www._52bang.site.tk.yinliu
 
                 //设置资源解析方式
                 this.skinComboBox1.SelectedIndex = CacheData.MovieConfig.ConvertLinkIndex;
-                //选择的解析器
-                this.skinComboBox2.SelectedIndex = CacheData.MovieConfig.SelectedParserIndex;
+                if(this.skinComboBox2.Items.Count> CacheData.MovieConfig.SelectedParserIndex)
+                {
+                    //选择的解析器
+                    this.skinComboBox2.SelectedIndex = CacheData.MovieConfig.SelectedParserIndex;
+                }
+                
 
                 UpdateDataGridView(skinDataGridView1,CacheData.GroupList, CacheData.MovieConfig.CheckedQQQun);
             }
@@ -242,27 +246,32 @@ namespace www._52bang.site.tk.yinliu
 
         private void UpdateDataGridView(SkinDataGridView skinDataGridView1, List<www_52bang_site_enjoy.MyModel.GroupInfo> groupList, Dictionary<long, int> checkedQQQun)
         {
-            skinDataGridView1.Rows.Clear();
-            MyDictionaryUtil<long, int> myDictionaryUtil = new MyDictionaryUtil<long, int>();
-            for (int i = 0; i < groupList.Count; i++)
+            try { 
+                skinDataGridView1.Rows.Clear();
+                MyDictionaryUtil<long, int> myDictionaryUtil = new MyDictionaryUtil<long, int>();
+                for (int i = 0; i < groupList.Count; i++)
+                {
+                    www_52bang_site_enjoy.MyModel.GroupInfo groupInfo = groupList[i];
+                    int result = myDictionaryUtil.GetValue(checkedQQQun, groupInfo.GroupId);
+                    int index = skinDataGridView1.Rows.Add();
+                    if (result == 1)//选中了
+                    {
+                        skinDataGridView1.Rows[index].Cells[0].Value = true;
+                    }
+                    else//未选中
+                    {
+                        skinDataGridView1.Rows[index].Cells[0].Value = false;
+                    }
+
+                    skinDataGridView1.Rows[index].Cells[1].Value = groupInfo.GroupName;
+                    skinDataGridView1.Rows[index].Cells[2].Value = groupInfo.GroupId;
+
+
+
+                }
+            }catch(Exception ex)
             {
-                www_52bang_site_enjoy.MyModel.GroupInfo groupInfo = groupList[i];
-                int result = myDictionaryUtil.GetValue(checkedQQQun, groupInfo.GroupId);
-                int index = skinDataGridView1.Rows.Add();
-                if (result == 1)//选中了
-                {
-                    skinDataGridView1.Rows[index].Cells[0].Value = true;
-                }
-                else//未选中
-                {
-                    skinDataGridView1.Rows[index].Cells[0].Value = false;
-                }
-
-                skinDataGridView1.Rows[index].Cells[1].Value = groupInfo.GroupName;
-                skinDataGridView1.Rows[index].Cells[2].Value = groupInfo.GroupId;
-
-
-
+                MyLogUtil.ErrToLog("错误信息："+ex);
             }
         }
 
@@ -301,6 +310,9 @@ namespace www._52bang.site.tk.yinliu
                 {
                     this.Text = this.Text+"  （"+ loginUserName + "）过期时间："+ret;
                 }
+
+                //加载解析接口
+                CacheData.resourceApiList = MySystemUtil.GetVipParserApiList();
 
 
                 this.skinComboBox1.ValueMember = "index";
@@ -556,6 +568,10 @@ namespace www._52bang.site.tk.yinliu
             try
             {
                 CacheData.GroupList = CoolQApiExtend.GetGroupList(coolQApi);
+                MyLogUtil.ErrToLog("获取的群列表大小："+ CacheData.GroupList.Count);
+                MyLogUtil.ErrToLog("skinDataGridView2" + skinDataGridView2);
+                MyLogUtil.ErrToLog("CacheData.GroupList" + CacheData.GroupList);
+                MyLogUtil.ErrToLog("CacheData.BaseJson" + CacheData.BaseJson);
                 //选中群列表中某些群
                 UpdateDataGridView(skinDataGridView2, CacheData.GroupList, CacheData.BaseJson.CheckedQQQun);
                 //选中群列表中某些群

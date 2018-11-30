@@ -72,6 +72,7 @@ namespace www_52bang_site_enjoy.MyTool
         public static List<GroupInfo> GetGroupList(ICoolQApi api)
         {
             string content = api.CQ_getGroupList();
+            MyLogUtil.ErrToLog("获取的群信息："+content);
             return ParseGroupList(content);
         }
 
